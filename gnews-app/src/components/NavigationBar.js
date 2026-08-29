@@ -1,133 +1,57 @@
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
+import { CATEGORIES, LANGUAGES } from '../config/navigation';
 
 function NavigationBar() {
-  const location = useLocation(); // tells React to re-render when URL changes
-  const path = location.pathname; // example: "/gujarati/sports"
+  const { pathname } = useLocation();
 
-  const isEnglish = path.startsWith('/english');
-  const isHindi = path.startsWith('/hindi');
-  const isGujarati = path.startsWith('/gujarati');
+  const activeLang =
+    LANGUAGES.find((l) => pathname.startsWith(`/${l.prefix}`)) ?? LANGUAGES[0];
 
-  // ---------- ENGLISH NAVBAR ----------
-  if (isEnglish) {
-    return (
-      <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
-        <Container>
-          <Navbar.Brand as={Link} to="/english/general">GNews App</Navbar.Brand>
-          <Navbar.Toggle aria-controls="main-navbar" />
-          <Navbar.Collapse id="main-navbar">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/english/general">General</Nav.Link>
-              <Nav.Link as={Link} to="/english/world">World</Nav.Link>
-              <Nav.Link as={Link} to="/english/nation">Nation</Nav.Link>
-              <Nav.Link as={Link} to="/english/business">Business</Nav.Link>
-              <Nav.Link as={Link} to="/english/technology">Technology</Nav.Link>
-              <Nav.Link as={Link} to="/english/entertainment">Entertainment</Nav.Link>
-              <Nav.Link as={Link} to="/english/sports">Sports</Nav.Link>
-              <Nav.Link as={Link} to="/english/science">Science</Nav.Link>
-              <Nav.Link as={Link} to="/english/health">Health</Nav.Link>
-            </Nav>
-            <Nav className="ms-auto">
-              <NavDropdown title="English" id="nav-dropdown-language">
-                <NavDropdown.Item as={Link} to="/english/general">English</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/hindi/general">Hindi</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/gujarati/general">Gujarati</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    );
-  }
+  const activeCategory =
+    CATEGORIES.find((c) => pathname.endsWith(`/${c.slug}`))?.slug ?? 'general';
 
-  // ---------- HINDI NAVBAR ----------
-  if (isHindi) {
-    return (
-      <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
-        <Container>
-          <Navbar.Brand as={Link} to="/hindi/general">GNews App</Navbar.Brand>
-          <Navbar.Toggle aria-controls="main-navbar" />
-          <Navbar.Collapse id="main-navbar">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/hindi/general">General</Nav.Link>
-              <Nav.Link as={Link} to="/hindi/world">World</Nav.Link>
-              <Nav.Link as={Link} to="/hindi/nation">Nation</Nav.Link>
-              <Nav.Link as={Link} to="/hindi/business">Business</Nav.Link>
-              <Nav.Link as={Link} to="/hindi/technology">Technology</Nav.Link>
-              <Nav.Link as={Link} to="/hindi/entertainment">Entertainment</Nav.Link>
-              <Nav.Link as={Link} to="/hindi/sports">Sports</Nav.Link>
-              <Nav.Link as={Link} to="/hindi/science">Science</Nav.Link>
-              <Nav.Link as={Link} to="/hindi/health">Health</Nav.Link>
-            </Nav>
-            <Nav className="ms-auto">
-              <NavDropdown title="Hindi" id="nav-dropdown-language">
-                <NavDropdown.Item as={Link} to="/english/general">English</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/hindi/general">Hindi</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/gujarati/general">Gujarati</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    );
-  }
-
-  // ---------- GUJARATI NAVBAR ----------
-  if (isGujarati) {
-    return (
-      <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
-        <Container>
-          <Navbar.Brand as={Link} to="/gujarati/general">GNews App</Navbar.Brand>
-          <Navbar.Toggle aria-controls="main-navbar" />
-          <Navbar.Collapse id="main-navbar">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/gujarati/general">General</Nav.Link>
-              <Nav.Link as={Link} to="/gujarati/world">World</Nav.Link>
-              <Nav.Link as={Link} to="/gujarati/nation">Nation</Nav.Link>
-              <Nav.Link as={Link} to="/gujarati/business">Business</Nav.Link>
-              <Nav.Link as={Link} to="/gujarati/technology">Technology</Nav.Link>
-              <Nav.Link as={Link} to="/gujarati/entertainment">Entertainment</Nav.Link>
-              <Nav.Link as={Link} to="/gujarati/sports">Sports</Nav.Link>
-              <Nav.Link as={Link} to="/gujarati/science">Science</Nav.Link>
-              <Nav.Link as={Link} to="/gujarati/health">Health</Nav.Link>
-            </Nav>
-            <Nav className="ms-auto">
-              <NavDropdown title="Gujarati" id="nav-dropdown-language">
-                <NavDropdown.Item as={Link} to="/english/general">English</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/hindi/general">Hindi</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/gujarati/general">Gujarati</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    );
-  }
-
-  // ---------- DEFAULT (fallback to English) ----------
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
+    <Navbar expand="lg" sticky="top" className="app-navbar">
       <Container>
-        <Navbar.Brand as={Link} to="/english/general">GNews App</Navbar.Brand>
+        <Navbar.Brand as={Link} to={`/${activeLang.prefix}/general`} className="navbar-brand-custom">
+          <span className="brand-icon">📰</span>
+          GNews
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="main-navbar" />
         <Navbar.Collapse id="main-navbar">
-          <Nav className="me-auto">
-            <Nav.Link as={Link} to="/english/general">General</Nav.Link>
-            <Nav.Link as={Link} to="/english/world">World</Nav.Link>
-            <Nav.Link as={Link} to="/english/nation">Nation</Nav.Link>
-            <Nav.Link as={Link} to="/english/business">Business</Nav.Link>
-            <Nav.Link as={Link} to="/english/technology">Technology</Nav.Link>
-            <Nav.Link as={Link} to="/english/entertainment">Entertainment</Nav.Link>
-            <Nav.Link as={Link} to="/english/sports">Sports</Nav.Link>
-            <Nav.Link as={Link} to="/english/science">Science</Nav.Link>
-            <Nav.Link as={Link} to="/english/health">Health</Nav.Link>
+          <Nav className="me-auto nav-categories">
+            {CATEGORIES.map(({ slug, label }) => (
+              <Nav.Link
+                key={slug}
+                as={Link}
+                to={`/${activeLang.prefix}/${slug}`}
+                className={activeCategory === slug ? 'active' : ''}
+              >
+                {label}
+              </Nav.Link>
+            ))}
           </Nav>
           <Nav className="ms-auto">
-            <NavDropdown title="English" id="nav-dropdown-language">
-              <NavDropdown.Item as={Link} to="/english/general">English</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/hindi/general">Hindi</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/gujarati/general">Gujarati</NavDropdown.Item>
+            <NavDropdown
+              title={
+                <span className="lang-dropdown-title">
+                  🌐 {activeLang.label}
+                </span>
+              }
+              id="nav-dropdown-language"
+              align="end"
+            >
+              {LANGUAGES.map(({ prefix, label }) => (
+                <NavDropdown.Item
+                  key={prefix}
+                  as={Link}
+                  to={`/${prefix}/${activeCategory}`}
+                  active={activeLang.prefix === prefix}
+                >
+                  {label}
+                </NavDropdown.Item>
+              ))}
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
