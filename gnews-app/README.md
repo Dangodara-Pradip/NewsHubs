@@ -71,6 +71,8 @@ gnews-app
 ├── package-lock.json
 └── README.md
 ```
+**#links **
+https://livenewspdfetch.netlify.app
 
 # 👨‍💻 Author
 
